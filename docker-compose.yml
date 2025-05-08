@@ -2,7 +2,7 @@ services:
   product-management-db:
     image: postgres:latest
     container_name: product_management_db
-    # restart: always
+    restart: always
     environment:
       POSTGRES_USER: admin_db
       POSTGRES_PASSWORD: admin
@@ -19,7 +19,7 @@ services:
     build:
       context: .
       dockerfile: ProductManagement.API/Dockerfile
-    # restart: always
+    restart: always
     environment:
       - ASPNETCORE_URLS=http://0.0.0.0:7118
       - ConnectionStrings__DbProjectManagementConnection=User ID=admin_db;Password=admin;Host=product_management_db;Port=5432;Database=product_management_db;Pooling=true;
@@ -34,7 +34,7 @@ services:
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin
-    # restart: always
+    restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@productmanagement.com
       PGADMIN_DEFAULT_PASSWORD: P@ssw0rd
