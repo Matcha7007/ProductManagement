@@ -1,1 +1,1 @@
-﻿dotnet ef dbcontext scaffold "User ID=admin_db;Password=admin;Server=localhost;Port=5432;Database=product_management_db;Pooling=true;" Npgsql.EntityFrameworkCore.PostgreSQL --output-dir Domain --context-dir Persistence --context DbContext --force
+﻿dotnet ef dbcontext scaffold "User ID=admin_db;Password=admin;Server=localhost;Port=5432;Database=product_management_db;Pooling=true;" Npgsql.EntityFrameworkCore.PostgreSQL --output-dir ../ProductManagement.Domain --context-dir ../ProductManagement.Persistence --context ProductManagementDbContext --force
