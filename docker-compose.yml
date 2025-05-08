@@ -1,0 +1,51 @@
+services:
+  product-management-db:
+    image: postgres:latest
+    container_name: product_management_db
+    # restart: always
+    environment:
+      POSTGRES_USER: admin_db
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: product_management_db
+    ports:
+      - "5432:5432"
+    networks:
+      - product_management_network
+    volumes:
+      - product_management_db:/var/lib/postgresql/data
+      - ./init/product_management_db.sql:/docker-entrypoint-initdb.d/init.sql
+
+  product-management-service:
+    build:
+      context: .
+      dockerfile: ProductManagement.API/Dockerfile
+    # restart: always
+    environment:
+      - ASPNETCORE_URLS=http://0.0.0.0:7118
+      - ConnectionStrings__DbProjectManagementConnection=User ID=admin_db;Password=admin;Host=product_management_db;Port=5432;Database=product_management_db;Pooling=true;
+    depends_on:
+      product-management-db:
+        condition: service_started
+    ports:
+      - "7118:7118"
+    networks:
+      - product_management_network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    # restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@productmanagement.com
+      PGADMIN_DEFAULT_PASSWORD: P@ssw0rd
+    ports:
+      - "5051:80"
+    networks:
+      - product_management_network
+
+networks:
+  product_management_network:
+    driver: bridge
+
+volumes:
+  product_management_db:

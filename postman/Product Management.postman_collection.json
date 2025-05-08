@@ -1,0 +1,428 @@
+{
+	"info": {
+		"_postman_id": "ee41589d-b11d-4c87-928c-d21fa036ce1c",
+		"name": "Product Management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15835200"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Auth/is-online",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrlAuth}}/is-online",
+							"host": [
+								"{{BaseUrlAuth}}"
+							],
+							"path": [
+								"is-online"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth/login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": \"admin1\",\r\n    \"password\": \"P@ssw0rd\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrlAuth}}/login",
+							"host": [
+								"{{BaseUrlAuth}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth/registration",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin1\",\r\n    \"fullName\": \"Admin ke 1\",\r\n    \"email\": \"admin1@gmail.com\",\r\n    \"phone\": \"0812102663005\",\r\n    \"password\": \"P@ssw0rd\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrlAuth}}/registration",
+							"host": [
+								"{{BaseUrlAuth}}"
+							],
+							"path": [
+								"registration"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{BearerToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "Product/is-online",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerTokenWallet}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrlProduct}}/is-online",
+							"host": [
+								"{{BaseUrlProduct}}"
+							],
+							"path": [
+								"is-online"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product/search",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerTokenWallet}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pageNumber\": 1,\r\n    \"pageSize\": 10,\r\n    \"orderBy\": \"name\",\r\n    \"isAscending\": false,\r\n    \"filter\": {\r\n        // \"filterName\": \"Pensil\",\r\n        // \"filterMinPrice\": 1000,\r\n        // \"filterMaxPrice\": 100000\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrlProduct}}/search",
+							"host": [
+								"{{BaseUrlProduct}}"
+							],
+							"path": [
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product/get-by-id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerTokenWallet}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": {{ProductId}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrlProduct}}/get-by-id",
+							"host": [
+								"{{BaseUrlProduct}}"
+							],
+							"path": [
+								"get-by-id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product/create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerTokenWallet}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Donat Gula\",\r\n  \"description\": \"Donat tradisional dengan taburan gula halus\",\r\n  \"price\": 1500\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrlProduct}}/create",
+							"host": [
+								"{{BaseUrlProduct}}"
+							],
+							"path": [
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product/update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerTokenWallet}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": {{ProductId}},\r\n    \"name\": \"Donat Gula Gula\",\r\n    \"description\": \"Donat tradisional dengan taburan gula halus\",\r\n    \"price\": 4500\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrlProduct}}/update",
+							"host": [
+								"{{BaseUrlProduct}}"
+							],
+							"path": [
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product/delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerTokenWallet}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": {{ProductId}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrlProduct}}/delete",
+							"host": [
+								"{{BaseUrlProduct}}"
+							],
+							"path": [
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{BearerToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "Host",
+			"value": "localhost",
+			"type": "string"
+		},
+		{
+			"key": "VersionAPI",
+			"value": "v1",
+			"type": "string"
+		},
+		{
+			"key": "Port",
+			"value": "7118",
+			"type": "string"
+		},
+		{
+			"key": "BearerToken",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiJkYzBhN2YxZC1lYWM2LTQwMDUtODg4ZC1mNjc5YTJjOWZkZDkiLCJuYmYiOjE3NDQ2MTI2NDIsImV4cCI6MTc0NDYxMjk0MiwiaWF0IjoxNzQ0NjEyNjQyLCJpc3MiOiJKV1RBdXRoZW50aWNhdGlvblNpbXBsZUVXYWxsZXQiLCJhdWQiOiJKV1RTZXJ2aWNlU2ltcGxlRVdhbGxldENsaWVudCJ9.H_VOuw7aKWbpxC43EH8jUNUYOkhSbpYPnTAZ-xVzBs8",
+			"type": "string"
+		},
+		{
+			"key": "BaseUrlAuth",
+			"value": "https://{{Host}}:{{Port}}/api/{{VersionAPI}}/Auth",
+			"type": "string"
+		},
+		{
+			"key": "BaseUrlProduct",
+			"value": "https://{{Host}}:{{Port}}/api/{{VersionAPI}}/Product",
+			"type": "string"
+		},
+		{
+			"key": "ProductId",
+			"value": "1",
+			"type": "string"
+		}
+	]
+}
