@@ -6,10 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using ProductManagement.Persistence;
 using ProductManagement.Domain;
 using ProductManagement.Common.Helpers;
+using System.Text.Json;
+using ProductManagement.Common.Extensions;
 
 namespace ProductManagement.Features.Auth.Commands
 {
-	public class LoginHandler(ProductManagementDbContext context) : IRequestHandler<LoginCommand, LoginResponse?>
+	public class LoginHandler(ProductManagementDbContext context, NLog.ILogger logger) : IRequestHandler<LoginCommand, LoginResponse?>
 	{
 		public async Task<LoginResponse?> Handle(LoginCommand request, CancellationToken cancellationToken)
 		{
@@ -53,6 +55,7 @@ namespace ProductManagement.Features.Auth.Commands
 			catch (Exception ex)
 			{
 				response.SetErrorMessage(ex.Message);
+				logger.LogException(ex, nameof(this.Handle), JsonSerializer.Serialize(request.Parameters));
 			}
 			return response;
 		}

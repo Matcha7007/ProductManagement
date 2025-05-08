@@ -6,10 +6,12 @@ using ProductManagement.Common.Base.WebAPI;
 using ProductManagement.Persistence;
 using ProductManagement.Domain;
 using ProductManagement.Common.Helpers;
+using System.Text.Json;
+using ProductManagement.Common.Extensions;
 
 namespace ProductManagement.Features.Auth.Commands
 {
-	public class RegistrationHandler(ProductManagementDbContext context) : IRequestHandler<RegistrationCommand, RegistrationResponse?>
+	public class RegistrationHandler(ProductManagementDbContext context, NLog.ILogger logger) : IRequestHandler<RegistrationCommand, RegistrationResponse?>
 	{
 		public async Task<RegistrationResponse?> Handle(RegistrationCommand request, CancellationToken cancellationToken)
 		{
@@ -84,6 +86,7 @@ namespace ProductManagement.Features.Auth.Commands
 			{
 				response.SetErrorMessage(ex.Message);
 				await context.Database.RollbackTransactionAsync(cancellationToken);
+				logger.LogException(ex, nameof(this.Handle), JsonSerializer.Serialize(request.Parameters));
 			}
 			return response;
 		}

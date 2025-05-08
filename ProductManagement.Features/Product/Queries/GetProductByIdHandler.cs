@@ -8,10 +8,12 @@ using ProductManagement.Common.Dtos.Product;
 using ProductManagement.Common.Base.WebAPI;
 using ProductManagement.Domain;
 using ProductManagement.Persistence;
+using System.Text.Json;
+using ProductManagement.Common.Extensions;
 
 namespace ProductManagement.Features.Product.Queries
 {
-    public class GetProductByIdHandler(ProductManagementDbContext context, IMapper mapper) : IRequestHandler<GetProductByIdQuery, ProductByIdResponse?>
+    public class GetProductByIdHandler(ProductManagementDbContext context, IMapper mapper, NLog.ILogger logger) : IRequestHandler<GetProductByIdQuery, ProductByIdResponse?>
 	{
 		public async Task<ProductByIdResponse?> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
 		{
@@ -45,6 +47,7 @@ namespace ProductManagement.Features.Product.Queries
 			catch (Exception ex)
 			{
 				response.SetErrorMessage(ex.Message);
+				logger.LogException(ex, nameof(this.Handle), JsonSerializer.Serialize(request.Parameters));
 			}
 			return response;
 		}

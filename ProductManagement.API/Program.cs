@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using ProductManagement.Persistence;
+using NLog;
 
-using System.Reflection;
+using ProductManagement.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +26,9 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+LogManager.Setup().LoadConfigurationFromFile("nlog.config", true);
+builder.Services.AddSingleton<NLog.ILogger>(LogManager.GetCurrentClassLogger());
 
 var app = builder.Build();
 

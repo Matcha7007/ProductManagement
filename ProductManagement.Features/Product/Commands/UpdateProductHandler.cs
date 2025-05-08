@@ -5,10 +5,12 @@ using ProductManagement.Common.Dtos.Product;
 using ProductManagement.Common.Base.WebAPI;
 using ProductManagement.Domain;
 using ProductManagement.Persistence;
+using System.Text.Json;
+using ProductManagement.Common.Extensions;
 
 namespace ProductManagement.Features.Product.Commands
 {
-    public class UpdateProductHandler(ProductManagementDbContext context) : IRequestHandler<UpdateProductCommand, ProductResponse?>
+    public class UpdateProductHandler(ProductManagementDbContext context, NLog.ILogger logger) : IRequestHandler<UpdateProductCommand, ProductResponse?>
 	{
 		public async Task<ProductResponse?> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
 		{
@@ -57,6 +59,7 @@ namespace ProductManagement.Features.Product.Commands
 			{
 				response.SetErrorMessage(ex.Message);
 				await context.Database.RollbackTransactionAsync(cancellationToken);
+				logger.LogException(ex, nameof(this.Handle), JsonSerializer.Serialize(request.Parameters));
 			}
 			return response;
 		}

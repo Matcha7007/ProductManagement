@@ -5,12 +5,15 @@ using Microsoft.EntityFrameworkCore;
 
 using ProductManagement.Common.Base.WebAPI;
 using ProductManagement.Common.Dtos.Product;
+using ProductManagement.Common.Extensions;
 using ProductManagement.Domain;
 using ProductManagement.Persistence;
 
+using System.Text.Json;
+
 namespace ProductManagement.Features.Product.Queries
 {
-    class SearchProductHandler(ProductManagementDbContext context, IMapper mapper) : IRequestHandler<SearchProductQuery, ProductSearchResponse?>
+    class SearchProductHandler(ProductManagementDbContext context, IMapper mapper, NLog.ILogger logger) : IRequestHandler<SearchProductQuery, ProductSearchResponse?>
 	{
 		public async Task<ProductSearchResponse?> Handle(SearchProductQuery request, CancellationToken cancellationToken)
 		{
@@ -49,6 +52,7 @@ namespace ProductManagement.Features.Product.Queries
 			catch (Exception ex)
 			{
 				response.SetErrorMessage(ex.Message);
+				logger.LogException(ex, nameof(this.Handle), JsonSerializer.Serialize(request.Parameters));
 			}
 			return response;
 		}

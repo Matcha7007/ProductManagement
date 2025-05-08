@@ -6,10 +6,12 @@ using ProductManagement.Common.Dtos.Product;
 using ProductManagement.Common.Base.WebAPI;
 using ProductManagement.Domain;
 using ProductManagement.Persistence;
+using System.Text.Json;
+using ProductManagement.Common.Extensions;
 
 namespace ProductManagement.Features.Product.Commands
 {
-    public class CreateProductHandler(ProductManagementDbContext context) : IRequestHandler<CreateProductCommand, ProductResponse?>
+    public class CreateProductHandler(ProductManagementDbContext context, NLog.ILogger logger) : IRequestHandler<CreateProductCommand, ProductResponse?>
     {
         public async Task<ProductResponse?> Handle(CreateProductCommand request, CancellationToken cancellationToken) 
         {
@@ -68,6 +70,7 @@ namespace ProductManagement.Features.Product.Commands
 			{
 				response.SetErrorMessage(ex.Message);
 				await context.Database.RollbackTransactionAsync(cancellationToken);
+				logger.LogException(ex, nameof(this.Handle), JsonSerializer.Serialize(request.Parameters));
 			}
 			return response;
 		}
