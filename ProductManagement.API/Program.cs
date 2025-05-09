@@ -6,7 +6,7 @@ using ProductManagement.Persistence;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options => options.AddPolicy("AllowAnyHost", policy => policy
-			.WithOrigins("http://localhost:3000")
+			.WithOrigins("http://localhost:3000", "http://localhost", "http://product_management_app", "http://product_management_app:3000")
 			.AllowAnyHeader()
 			.AllowAnyMethod()
 			.AllowCredentials()));
