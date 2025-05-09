@@ -36,19 +36,19 @@ namespace ProductManagement.API.Controllers
 			return ResponseToActionResult(response);
 		}
 
-		[HttpPost("registration")]
-		public async Task<IActionResult> Registration([FromBody] RegistrationParameters parameters)
+		[HttpPost("register")]
+		public async Task<IActionResult> Register([FromBody] RegistrationParameters parameters)
 		{
 			RegistrationResponse response = new();
 			try
 			{
 				response = await mediator.Send(new RegistrationCommand(parameters));
-				logger.LogInfo(nameof(this.Registration), JsonSerializer.Serialize(parameters), response.StatusCode, response.Message, HttpContext?.Request?.Path.ToString()!);
+				logger.LogInfo(nameof(this.Register), JsonSerializer.Serialize(parameters), response.StatusCode, response.Message, HttpContext?.Request?.Path.ToString()!);
 			}
 			catch (Exception ex)
 			{
 				response.SetErrorMessage(ex.Message);
-				logger.LogException(ex, nameof(this.Registration), JsonSerializer.Serialize(parameters), HttpContext?.Request?.Path.ToString()!);
+				logger.LogException(ex, nameof(this.Register), JsonSerializer.Serialize(parameters), HttpContext?.Request?.Path.ToString()!);
 			}
 			return ResponseToActionResult(response);
 		}

@@ -41,7 +41,7 @@ namespace ProductManagement.Features.Auth.Commands
 					.FirstOrDefaultAsync(x => x.Username == request.Parameters.UserName && x.IsActive == true, cancellationToken);
 				if (user == null || !HashHelper.Verify(request.Parameters.Password, user.PasswordHash))
 				{
-					response.SetValidationMessage("Phone or Password is incorrect");
+					response.SetValidationMessage("Username or Password is incorrect");
 					return response;
 				}
 				#endregion
@@ -49,7 +49,7 @@ namespace ProductManagement.Features.Auth.Commands
 				#region Generate Bearer Token
 				response.BearerToken = BearerTokenHelper.GenerateBearerToken(user.Id);
 				response.UserFullName = user.FullName;
-				response.Message = "Login success";
+				response.Message = "Login success!";
 				#endregion
 			}
 			catch (Exception ex)

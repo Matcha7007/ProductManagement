@@ -77,7 +77,7 @@ namespace ProductManagement.Features.Auth.Commands
 				};
 				context.MstUsers.Add(newUser);
 				await context.SaveChangesAsync(cancellationToken);
-				response.Message = "User has been created";
+				response.Message = "Registration successful! Please log in to continue.";
 				#endregion
 
 				await context.Database.CommitTransactionAsync(cancellationToken);

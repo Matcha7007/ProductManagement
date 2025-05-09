@@ -5,6 +5,12 @@ using ProductManagement.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options => options.AddPolicy("AllowAnyHost", policy => policy
+			.WithOrigins("http://localhost:3000")
+			.AllowAnyHeader()
+			.AllowAnyMethod()
+			.AllowCredentials()));
+
 builder.Configuration
 	.SetBasePath(Directory.GetCurrentDirectory())
 	.AddJsonFile("appsettings.json", optional: true)
@@ -40,7 +46,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("AllowAnyHost");
 app.UseAuthorization();
 
 app.MapControllers();
