@@ -59,7 +59,7 @@
 					"response": []
 				},
 				{
-					"name": "Auth/registration",
+					"name": "Auth/register",
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -76,12 +76,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseUrlAuth}}/registration",
+							"raw": "{{BaseUrlAuth}}/register",
 							"host": [
 								"{{BaseUrlAuth}}"
 							],
 							"path": [
-								"registration"
+								"register"
 							]
 						}
 					},
@@ -390,11 +390,6 @@
 	],
 	"variable": [
 		{
-			"key": "Host",
-			"value": "localhost",
-			"type": "string"
-		},
-		{
 			"key": "VersionAPI",
 			"value": "v1",
 			"type": "string"
@@ -402,6 +397,11 @@
 		{
 			"key": "Port",
 			"value": "7118",
+			"type": "string"
+		},
+		{
+			"key": "Host",
+			"value": "localhost",
 			"type": "string"
 		},
 		{
