@@ -45,7 +45,7 @@ export default function ProductPage({ token, setToken }: Props) {
 	const fetchProducts = async () => {
 		try {
 			const res = await axios.post(
-				"https://localhost:7118/api/v1/Product/search",
+				`${process.env.REACT_APP_API_URL}/Product/search`,
 				{
 					pageNumber: page,
 					pageSize,
@@ -65,6 +65,8 @@ export default function ProductPage({ token, setToken }: Props) {
 			);
 			setProducts(res.data.data.listData);
 			setTotalPages(res.data.data.totalPages);
+			setError("");
+			setSuccess("");
 		} catch (err) {
 			console.error("Failed to fetch products", err);
 		}
@@ -104,7 +106,7 @@ export default function ProductPage({ token, setToken }: Props) {
 		if (!confirm("Are you sure to delete this product?")) return;
 		try {
 			const res = await axios.post(
-				"https://localhost:7118/api/v1/Product/delete",
+				`${process.env.REACT_APP_API_URL}/Product/delete`,
 				{
 					id,
 				},
@@ -130,7 +132,7 @@ export default function ProductPage({ token, setToken }: Props) {
 		try {
 			if (isEditing && formProduct.id != null) {
 				const res = await axios.post(
-					"https://localhost:7118/api/v1/Product/update",
+					`${process.env.REACT_APP_API_URL}/Product/update`,
 					formProduct,
 					{
 						headers: {
@@ -145,7 +147,7 @@ export default function ProductPage({ token, setToken }: Props) {
 				}
 			} else {
 				const res = await axios.post(
-					"https://localhost:7118/api/v1/Product/create",
+					`${process.env.REACT_APP_API_URL}/Product/create`,
 					formProduct,
 					{
 						headers: { Authorization: `Bearer ${token}` },

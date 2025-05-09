@@ -19,7 +19,7 @@ export default function RegisterPage() {
 		e.preventDefault();
 		try {
 			const res = await axios.post(
-				"https://localhost:7118/api/v1/Auth/registration",
+				`${process.env.REACT_APP_API_URL}/Auth/register`,
 				{
 					userName: username,
 					fullName,
@@ -30,13 +30,12 @@ export default function RegisterPage() {
 			);
 			if (res.data.isValid) {
 				setSuccess(res.data.message);
-				setTimeout(() => navigate("/login"), 2000);
 				setUsername("");
 				setFullName("");
 				setEmail("");
 				setPhone("");
 				setPassword("");
-				setSuccess("");
+				setTimeout(() => navigate("/login"), 2000);
 			} else {
 				setError(res.data.message);
 			}

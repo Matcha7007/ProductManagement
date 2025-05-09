@@ -18,17 +18,19 @@ export default function LoginPage({ setToken }: Props) {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		try {
-			const res = await axios.post("https://localhost:7118/api/v1/Auth/login", {
-				username: username,
-				password,
-			});
+			const res = await axios.post(
+				`${process.env.REACT_APP_API_URL}/Auth/login`,
+				{
+					username: username,
+					password,
+				}
+			);
 			if (res.data.isValid) {
 				setToken(res.data.bearerToken);
 				setSuccess(res.data.message);
-				navigate("/products");
 				setUsername("");
 				setPassword("");
-				setSuccess("");
+				setTimeout(() => navigate("/products"), 2000);
 			} else {
 				setError(res.data.message);
 			}
