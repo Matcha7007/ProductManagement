@@ -43,6 +43,20 @@ services:
     networks:
       - product_management_network
 
+  product-management-app:
+    build:
+      context: ./ProductManagement.ClientApp
+      dockerfile: Dockerfile
+    container_name: product_management_app
+    restart: always
+    ports:
+      - "3000:80"
+    depends_on:
+      product-management-service:
+        condition: service_started
+    networks:
+      - product_management_network
+
 networks:
   product_management_network:
     driver: bridge
