@@ -24,7 +24,7 @@ A mini product management web application built with ASP.NET Core 8 (Web API) us
 - DataAnnotations-based validation for all request models.
 
 ### 🧾 Logging & Exception Handling
-- Structured logging using **Serilog**.
+- Structured logging using **NLog**.
 - Centralized error handling with meaningful HTTP responses.
 
 ### 🖥️ Frontend
