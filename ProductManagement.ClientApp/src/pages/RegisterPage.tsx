@@ -45,7 +45,8 @@ export default function RegisterPage() {
 	};
 
 	return (
-		<Container className="d-flex justify-content-center align-items-center min-vh-100">
+		<Container className="d-flex justify-content-center align-items-center min-vh-100 flex-column">
+			<h3 className="mb-3">Product Management App</h3>
 			<Form
 				onSubmit={handleRegister}
 				className="p-4 border rounded shadow w-100"

@@ -40,11 +40,13 @@ export default function LoginPage({ setToken }: Props) {
 	};
 
 	return (
-		<Container className="d-flex justify-content-center align-items-center min-vh-100">
+		<Container className="d-flex justify-content-center align-items-center min-vh-100 flex-column">
+			<h3 className="mb-3">Product Management App</h3>
 			<Form
 				onSubmit={handleSubmit}
 				className="p-4 border rounded shadow w-100"
 				style={{ maxWidth: 400 }}>
+				<h4 className="mb-3">Welcome Back!</h4>
 				<h2 className="mb-3">Login</h2>
 				{error && <Alert variant="danger">{error}</Alert>}
 				{success && <Alert variant="success">{success}</Alert>}
